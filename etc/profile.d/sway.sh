@@ -2,6 +2,7 @@
 
 # Set XDG_CURRENT_DESKTOP to sway (for screencasting and screensharing capabilities)
 export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
 
 # Ubuntu Sway specific config dir
@@ -21,6 +22,9 @@ export ELM_ACCEL="gl"
 
 # Java XWayland blank screens fix
 export _JAVA_AWT_WM_NONREPARENTING=1
+export NO_AT_BRIDGE=1
+export BEMENU_BACKEND=wayland
+
 
 # Check if system is running in virtual machine
 case "$(systemd-detect-virt)" in
@@ -43,4 +47,8 @@ if [ "$CHK_DRV" = "nvidia" ]; then
     export WLR_NO_HARDWARE_CURSORS=1
     export GBM_BACKEND=nvidia-drm
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
+fi
+
+if lspci -k | grep "Kernel driver in use" | grep nouveau; then 
+  export WLR_NO_HARDWARE_CURSORS=1
 fi
